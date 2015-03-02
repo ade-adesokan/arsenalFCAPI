@@ -6,22 +6,6 @@ var multer = require('multer');
 var routes = express.Router();
 
 
-var multerConfig = multer(
-  { 
-    dest: './images',
-    rename: function (fieldname, filename) {
-      console.log(fieldname);
-      return filename+Date.now();
-    },
-    onFileUploadStart: function (file) {
-      console.log(file.originalname + ' is starting ...')
-    },
-    onFileUploadComplete: function (file) {
-      console.log(file.fieldname + ' uploaded to  ' + file.path)
-    }
-  });
-
-app.use(multerConfig);
 app.use('/', routes);
 
 
@@ -32,7 +16,7 @@ var allowCrossDomain = function(req, res, next) {
   next();
 };
 
-app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 5555));
 app.use(allowCrossDomain);
 
 

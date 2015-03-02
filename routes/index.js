@@ -9,16 +9,20 @@ var router = function(routes) {
 
 
   routes.route('/upload')
-  .post(function(req,res,next){
-    res.json(req.files.thumbnail.path);
-    link = req.files.thumbnail.path;
-    next();
-  })
+  .post(parseUrlencoded, function (request, response) {
+    if(request.body.image) {
+      link = request.body.image;
+      response.json(request.body.image);
+    }
+    else {
+      response.status(404).json('Error occured');
+    }
+  });
   
 
   routes.route('/')
   .get(function (request, response) {
-    ArsenalFC.find({}, 'name age jerseyNumber position numberOfGoals nationality rating link -_id', function (err, players) {
+    ArsenalFC.find({}, 'name age jerseyNumber position numberOfGoals country rating link -_id', function (err, players) {
       if(err){
         return handleError(err);
       }
